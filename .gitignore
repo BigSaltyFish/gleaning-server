@@ -3,6 +3,7 @@ HELP.md
 build/
 bin
 gradle
+src/main/java/com/merciless/gleaningserver/service/thrift
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
