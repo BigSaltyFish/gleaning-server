@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS glean;
+
+USE glean;
+
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS hosts;
+
+CREATE TABLE books (
+    bookId INTEGER PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(200),
+    content VARCHAR(100000)
+);
+
+CREATE TABLE hosts (
+    hostId INTEGER PRIMARY KEY AUTO_INCREMENT,
+    hostName VARCHAR(30),
+    hostOrigin VARCHAR(100)
+);

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# build the thrift interface
+
+thrift -out ./src/main/java --gen java:beans com.merciless.gleaningserver.service
