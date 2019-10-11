@@ -1,4 +1,4 @@
-namespace java com.merciless.rpcmethods
+namespace java com.merciless.gleaningserver.service.thrift
 
 service BooksService
 {

@@ -1,1 +1,1 @@
-thrift -out ./src/main/java/com/merciless/gleaningserver/service --gen java:beans thrift/glean.thrift
+thrift -out ./src/main/java --gen java:beans thrift/glean.thrift

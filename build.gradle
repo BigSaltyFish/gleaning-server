@@ -22,5 +22,10 @@ repositories {
 dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
+	// https://mvnrepository.com/artifact/org.apache.thrift/libthrift
+	compile group: 'org.apache.thrift', name: 'libthrift', version: '0.12.0'
+
 }
