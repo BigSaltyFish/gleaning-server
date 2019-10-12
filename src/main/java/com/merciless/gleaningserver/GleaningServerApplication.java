@@ -1,6 +1,7 @@
 package com.merciless.gleaningserver;
 
 import com.merciless.gleaningserver.configuration.Config;
+import com.merciless.gleaningserver.service.Gleaner;
 import com.merciless.gleaningserver.service.Provider;
 import com.merciless.gleaningserver.service.Server;
 import com.merciless.gleaningserver.service.thrift.ClientService;
@@ -11,6 +12,8 @@ import org.apache.thrift.server.TServer.Args;
 import org.apache.thrift.server.TSimpleServer;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +34,10 @@ public class GleaningServerApplication {
 	}
 
 	@Bean
-	public CommandLineRunner runner(Server server, Provider provider, Config config) {
+	public CommandLineRunner runner(
+		Server server, 
+		Provider provider, 
+		Config config) {
 		return (args) -> {
 
 			log.info("The application has started...");
