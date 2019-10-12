@@ -1,7 +1,10 @@
 package com.merciless.gleaningserver;
 
+import com.merciless.gleaningserver.configuration.Config;
+import com.merciless.gleaningserver.service.Provider;
 import com.merciless.gleaningserver.service.Server;
 import com.merciless.gleaningserver.service.thrift.ClientService;
+import com.merciless.gleaningserver.service.thrift.ServerCommunication;
 
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TServer.Args;
@@ -19,26 +22,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GleaningServerApplication {
 
-  	public static ClientService.Processor processor;
-
+	public static ClientService.Processor cProcessor;
+	  
+	public static ServerCommunication.Processor sProcessor;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(GleaningServerApplication.class, args);
 	}
 
 	@Bean
-	public CommandLineRunner runner(Server server) {
+	public CommandLineRunner runner(Server server, Provider provider, Config config) {
 		return (args) -> {
 
 			log.info("The application has started...");
 
 			try {
-				processor = new ClientService.Processor(server);
+				cProcessor = new ClientService.Processor(server);
+				sProcessor = new ServerCommunication.Processor(provider);
 
 				Runnable simple = new Runnable(){
 				
 					@Override
 					public void run() {
-						simple(processor);
+						simple(cProcessor, sProcessor, config);
 					}
 				};
 
@@ -49,15 +55,23 @@ public class GleaningServerApplication {
 		};
 	}
 
-	public static void simple(ClientService.Processor processor) {
+	public static void simple(ClientService.Processor cProcessor, ServerCommunication.Processor sProcessor, Config config) {
 		
 		try {
-			TServerTransport serverTransport = new TServerSocket(9090);
-			TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));
+			TServerTransport serverTransport = new TServerSocket(config.SERVER_PORT);
+			TServerTransport providerTransport = new TServerSocket(config.PROVIDER_PORT);
+			TServer server = new TSimpleServer(new Args(serverTransport).processor(cProcessor));
+			TServer provider = new TSimpleServer(new Args(providerTransport).processor(sProcessor));
 
-			log.info("the server has started...");
 			server.serve();
+			log.info("the server has started...");
+
+			provider.serve();
+			log.info("the provider has started...");
+
 		} catch (Exception e) {
+
+			log.error("Server failed to start. ");
 			e.printStackTrace();
 		}
 	}

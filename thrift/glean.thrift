@@ -20,5 +20,5 @@ service ClientService
 
 service ServerCommunication
 {
-    Book gleanBook(1:string location, 2:string title)
+    Book gleanBook(1:string title)
 }

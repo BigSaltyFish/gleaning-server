@@ -12,13 +12,13 @@ public class ServerCommunication {
 
   public interface Iface {
 
-    public Book gleanBook(java.lang.String location, java.lang.String title) throws org.apache.thrift.TException;
+    public Book gleanBook(java.lang.String title) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void gleanBook(java.lang.String location, java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException;
+    public void gleanBook(java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -42,16 +42,15 @@ public class ServerCommunication {
       super(iprot, oprot);
     }
 
-    public Book gleanBook(java.lang.String location, java.lang.String title) throws org.apache.thrift.TException
+    public Book gleanBook(java.lang.String title) throws org.apache.thrift.TException
     {
-      send_gleanBook(location, title);
+      send_gleanBook(title);
       return recv_gleanBook();
     }
 
-    public void send_gleanBook(java.lang.String location, java.lang.String title) throws org.apache.thrift.TException
+    public void send_gleanBook(java.lang.String title) throws org.apache.thrift.TException
     {
       gleanBook_args args = new gleanBook_args();
-      args.setLocation(location);
       args.setTitle(title);
       sendBase("gleanBook", args);
     }
@@ -84,26 +83,23 @@ public class ServerCommunication {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void gleanBook(java.lang.String location, java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException {
+    public void gleanBook(java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      gleanBook_call method_call = new gleanBook_call(location, title, resultHandler, this, ___protocolFactory, ___transport);
+      gleanBook_call method_call = new gleanBook_call(title, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class gleanBook_call extends org.apache.thrift.async.TAsyncMethodCall<Book> {
-      private java.lang.String location;
       private java.lang.String title;
-      public gleanBook_call(java.lang.String location, java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public gleanBook_call(java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.location = location;
         this.title = title;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("gleanBook", org.apache.thrift.protocol.TMessageType.CALL, 0));
         gleanBook_args args = new gleanBook_args();
-        args.setLocation(location);
         args.setTitle(title);
         args.write(prot);
         prot.writeMessageEnd();
@@ -156,7 +152,7 @@ public class ServerCommunication {
 
       public gleanBook_result getResult(I iface, gleanBook_args args) throws org.apache.thrift.TException {
         gleanBook_result result = new gleanBook_result();
-        result.success = iface.gleanBook(args.location, args.title);
+        result.success = iface.gleanBook(args.title);
         return result;
       }
     }
@@ -235,7 +231,7 @@ public class ServerCommunication {
       }
 
       public void start(I iface, gleanBook_args args, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException {
-        iface.gleanBook(args.location, args.title,resultHandler);
+        iface.gleanBook(args.title,resultHandler);
       }
     }
 
@@ -244,19 +240,16 @@ public class ServerCommunication {
   public static class gleanBook_args implements org.apache.thrift.TBase<gleanBook_args, gleanBook_args._Fields>, java.io.Serializable, Cloneable, Comparable<gleanBook_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("gleanBook_args");
 
-    private static final org.apache.thrift.protocol.TField LOCATION_FIELD_DESC = new org.apache.thrift.protocol.TField("location", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)1);
 
     private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new gleanBook_argsStandardSchemeFactory();
     private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new gleanBook_argsTupleSchemeFactory();
 
-    private @org.apache.thrift.annotation.Nullable java.lang.String location; // required
     private @org.apache.thrift.annotation.Nullable java.lang.String title; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      LOCATION((short)1, "location"),
-      TITLE((short)2, "title");
+      TITLE((short)1, "title");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -272,9 +265,7 @@ public class ServerCommunication {
       @org.apache.thrift.annotation.Nullable
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // LOCATION
-            return LOCATION;
-          case 2: // TITLE
+          case 1: // TITLE
             return TITLE;
           default:
             return null;
@@ -320,8 +311,6 @@ public class ServerCommunication {
     public static final java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.LOCATION, new org.apache.thrift.meta_data.FieldMetaData("location", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
@@ -332,11 +321,9 @@ public class ServerCommunication {
     }
 
     public gleanBook_args(
-      java.lang.String location,
       java.lang.String title)
     {
       this();
-      this.location = location;
       this.title = title;
     }
 
@@ -344,9 +331,6 @@ public class ServerCommunication {
      * Performs a deep copy on <i>other</i>.
      */
     public gleanBook_args(gleanBook_args other) {
-      if (other.isSetLocation()) {
-        this.location = other.location;
-      }
       if (other.isSetTitle()) {
         this.title = other.title;
       }
@@ -358,32 +342,7 @@ public class ServerCommunication {
 
     @Override
     public void clear() {
-      this.location = null;
       this.title = null;
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public java.lang.String getLocation() {
-      return this.location;
-    }
-
-    public void setLocation(@org.apache.thrift.annotation.Nullable java.lang.String location) {
-      this.location = location;
-    }
-
-    public void unsetLocation() {
-      this.location = null;
-    }
-
-    /** Returns true if field location is set (has been assigned a value) and false otherwise */
-    public boolean isSetLocation() {
-      return this.location != null;
-    }
-
-    public void setLocationIsSet(boolean value) {
-      if (!value) {
-        this.location = null;
-      }
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -412,14 +371,6 @@ public class ServerCommunication {
 
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
-      case LOCATION:
-        if (value == null) {
-          unsetLocation();
-        } else {
-          setLocation((java.lang.String)value);
-        }
-        break;
-
       case TITLE:
         if (value == null) {
           unsetTitle();
@@ -434,9 +385,6 @@ public class ServerCommunication {
     @org.apache.thrift.annotation.Nullable
     public java.lang.Object getFieldValue(_Fields field) {
       switch (field) {
-      case LOCATION:
-        return getLocation();
-
       case TITLE:
         return getTitle();
 
@@ -451,8 +399,6 @@ public class ServerCommunication {
       }
 
       switch (field) {
-      case LOCATION:
-        return isSetLocation();
       case TITLE:
         return isSetTitle();
       }
@@ -474,15 +420,6 @@ public class ServerCommunication {
       if (this == that)
         return true;
 
-      boolean this_present_location = true && this.isSetLocation();
-      boolean that_present_location = true && that.isSetLocation();
-      if (this_present_location || that_present_location) {
-        if (!(this_present_location && that_present_location))
-          return false;
-        if (!this.location.equals(that.location))
-          return false;
-      }
-
       boolean this_present_title = true && this.isSetTitle();
       boolean that_present_title = true && that.isSetTitle();
       if (this_present_title || that_present_title) {
@@ -499,10 +436,6 @@ public class ServerCommunication {
     public int hashCode() {
       int hashCode = 1;
 
-      hashCode = hashCode * 8191 + ((isSetLocation()) ? 131071 : 524287);
-      if (isSetLocation())
-        hashCode = hashCode * 8191 + location.hashCode();
-
       hashCode = hashCode * 8191 + ((isSetTitle()) ? 131071 : 524287);
       if (isSetTitle())
         hashCode = hashCode * 8191 + title.hashCode();
@@ -518,16 +451,6 @@ public class ServerCommunication {
 
       int lastComparison = 0;
 
-      lastComparison = java.lang.Boolean.valueOf(isSetLocation()).compareTo(other.isSetLocation());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetLocation()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.location, other.location);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
       lastComparison = java.lang.Boolean.valueOf(isSetTitle()).compareTo(other.isSetTitle());
       if (lastComparison != 0) {
         return lastComparison;
@@ -559,14 +482,6 @@ public class ServerCommunication {
       java.lang.StringBuilder sb = new java.lang.StringBuilder("gleanBook_args(");
       boolean first = true;
 
-      sb.append("location:");
-      if (this.location == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.location);
-      }
-      first = false;
-      if (!first) sb.append(", ");
       sb.append("title:");
       if (this.title == null) {
         sb.append("null");
@@ -617,15 +532,7 @@ public class ServerCommunication {
             break;
           }
           switch (schemeField.id) {
-            case 1: // LOCATION
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.location = iprot.readString();
-                struct.setLocationIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 2: // TITLE
+            case 1: // TITLE
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
                 struct.title = iprot.readString();
                 struct.setTitleIsSet(true);
@@ -646,11 +553,6 @@ public class ServerCommunication {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.location != null) {
-          oprot.writeFieldBegin(LOCATION_FIELD_DESC);
-          oprot.writeString(struct.location);
-          oprot.writeFieldEnd();
-        }
         if (struct.title != null) {
           oprot.writeFieldBegin(TITLE_FIELD_DESC);
           oprot.writeString(struct.title);
@@ -674,16 +576,10 @@ public class ServerCommunication {
       public void write(org.apache.thrift.protocol.TProtocol prot, gleanBook_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
-        if (struct.isSetLocation()) {
+        if (struct.isSetTitle()) {
           optionals.set(0);
         }
-        if (struct.isSetTitle()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
-        if (struct.isSetLocation()) {
-          oprot.writeString(struct.location);
-        }
+        oprot.writeBitSet(optionals, 1);
         if (struct.isSetTitle()) {
           oprot.writeString(struct.title);
         }
@@ -692,12 +588,8 @@ public class ServerCommunication {
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, gleanBook_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(2);
+        java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          struct.location = iprot.readString();
-          struct.setLocationIsSet(true);
-        }
-        if (incoming.get(1)) {
           struct.title = iprot.readString();
           struct.setTitleIsSet(true);
         }
