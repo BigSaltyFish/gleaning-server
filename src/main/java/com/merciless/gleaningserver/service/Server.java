@@ -1,13 +1,17 @@
 package com.merciless.gleaningserver.service;
 
+import java.util.ArrayList;
+
 import com.merciless.gleaningserver.domain.BookMapper;
-import com.merciless.gleaningserver.service.thrift.BooksService;
+import com.merciless.gleaningserver.service.thrift.Book;
+import com.merciless.gleaningserver.service.thrift.ClientService;
+import com.merciless.gleaningserver.service.thrift.Host;
 
 import org.apache.thrift.TException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Server implements BooksService.Iface {
+public class Server implements ClientService.Iface {
 
     private final Gleaner gleaner;
 
@@ -27,5 +31,16 @@ public class Server implements BooksService.Iface {
         return true;
     }
 
+    public ArrayList<Book> getAllBooks() throws TException {
+        return null;
+    }
+
+    public Book getBookByName(String title) throws TException {
+        return null;
+    }
+
+    public ArrayList<Host> getAllhosts() {
+        return null;
+    }
 
 }

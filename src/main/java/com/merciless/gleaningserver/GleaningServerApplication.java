@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class GleaningServerApplication {
 
-	private static final Logger logger = LoggerFactory.getLogger(GleaningServerApplication.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GleaningServerApplication.class);
 
   	public static BooksService.Processor processor;
 
@@ -28,9 +28,9 @@ public class GleaningServerApplication {
 
 	@Bean
 	public CommandLineRunner runner(Server server) {
-		return (args) ->{
+		return (args) -> {
 
-			logger.info("The application has started...");
+			LOGGER.info("The application has started...");
 
 			try {
 				processor = new BooksService.Processor(server);
@@ -56,7 +56,7 @@ public class GleaningServerApplication {
 			TServerTransport serverTransport = new TServerSocket(9090);
 			TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));
 
-			logger.info("the server has started...");
+			LOGGER.info("the server has started...");
 			server.serve();
 		} catch (Exception e) {
 			e.printStackTrace();

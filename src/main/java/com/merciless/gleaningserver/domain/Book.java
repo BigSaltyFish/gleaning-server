@@ -2,15 +2,9 @@ package com.merciless.gleaningserver.domain;
 
 public class Book {
 
-    private long bookId;
-
     private String title;
 
     private String content;
-
-    public long getBookId() {
-        return bookId;
-    }
 
     public String getContent() {
         return content;
@@ -28,7 +22,4 @@ public class Book {
         this.title = title;
     }
 
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
-    }
 }

@@ -1,6 +1,24 @@
 namespace java com.merciless.gleaningserver.service.thrift
 
-service BooksService
+struct Book {
+    1: required string title,
+    2: required string content
+}
+
+struct Host {
+    1:required string hostName,
+    2:required string location
+}
+
+service ClientService
 {
-    bool addBook(1:string title, 2:string content)
+    bool addBook(1:string title, 2:string content),
+    list<Book> getAllBooks(),
+    Book getBookByName(1:string title),
+    list<Host> getAllhosts()
+}
+
+service ServerCommunication
+{
+    list<Book> getList(1:string location)
 }
