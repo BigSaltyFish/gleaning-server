@@ -20,5 +20,5 @@ service ClientService
 
 service ServerCommunication
 {
-    list<Book> getList(1:string location)
+    Book gleanBook(1:string location, 2:string title)
 }

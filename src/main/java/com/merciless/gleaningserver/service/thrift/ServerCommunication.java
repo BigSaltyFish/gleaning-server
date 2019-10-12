@@ -12,13 +12,13 @@ public class ServerCommunication {
 
   public interface Iface {
 
-    public java.util.List<Book> getList(java.lang.String location) throws org.apache.thrift.TException;
+    public Book gleanBook(java.lang.String location, java.lang.String title) throws org.apache.thrift.TException;
 
   }
 
   public interface AsyncIface {
 
-    public void getList(java.lang.String location, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Book>> resultHandler) throws org.apache.thrift.TException;
+    public void gleanBook(java.lang.String location, java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -42,27 +42,28 @@ public class ServerCommunication {
       super(iprot, oprot);
     }
 
-    public java.util.List<Book> getList(java.lang.String location) throws org.apache.thrift.TException
+    public Book gleanBook(java.lang.String location, java.lang.String title) throws org.apache.thrift.TException
     {
-      send_getList(location);
-      return recv_getList();
+      send_gleanBook(location, title);
+      return recv_gleanBook();
     }
 
-    public void send_getList(java.lang.String location) throws org.apache.thrift.TException
+    public void send_gleanBook(java.lang.String location, java.lang.String title) throws org.apache.thrift.TException
     {
-      getList_args args = new getList_args();
+      gleanBook_args args = new gleanBook_args();
       args.setLocation(location);
-      sendBase("getList", args);
+      args.setTitle(title);
+      sendBase("gleanBook", args);
     }
 
-    public java.util.List<Book> recv_getList() throws org.apache.thrift.TException
+    public Book recv_gleanBook() throws org.apache.thrift.TException
     {
-      getList_result result = new getList_result();
-      receiveBase(result, "getList");
+      gleanBook_result result = new gleanBook_result();
+      receiveBase(result, "gleanBook");
       if (result.isSetSuccess()) {
         return result.success;
       }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getList failed: unknown result");
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "gleanBook failed: unknown result");
     }
 
   }
@@ -83,35 +84,38 @@ public class ServerCommunication {
       super(protocolFactory, clientManager, transport);
     }
 
-    public void getList(java.lang.String location, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Book>> resultHandler) throws org.apache.thrift.TException {
+    public void gleanBook(java.lang.String location, java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getList_call method_call = new getList_call(location, resultHandler, this, ___protocolFactory, ___transport);
+      gleanBook_call method_call = new gleanBook_call(location, title, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class getList_call extends org.apache.thrift.async.TAsyncMethodCall<java.util.List<Book>> {
+    public static class gleanBook_call extends org.apache.thrift.async.TAsyncMethodCall<Book> {
       private java.lang.String location;
-      public getList_call(java.lang.String location, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Book>> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private java.lang.String title;
+      public gleanBook_call(java.lang.String location, java.lang.String title, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.location = location;
+        this.title = title;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getList", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getList_args args = new getList_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("gleanBook", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        gleanBook_args args = new gleanBook_args();
         args.setLocation(location);
+        args.setTitle(title);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public java.util.List<Book> getResult() throws org.apache.thrift.TException {
+      public Book getResult() throws org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new java.lang.IllegalStateException("Method call not finished!");
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getList();
+        return (new Client(prot)).recv_gleanBook();
       }
     }
 
@@ -128,17 +132,17 @@ public class ServerCommunication {
     }
 
     private static <I extends Iface> java.util.Map<java.lang.String,  org.apache.thrift.ProcessFunction<I, ? extends org.apache.thrift.TBase>> getProcessMap(java.util.Map<java.lang.String, org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
-      processMap.put("getList", new getList());
+      processMap.put("gleanBook", new gleanBook());
       return processMap;
     }
 
-    public static class getList<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getList_args> {
-      public getList() {
-        super("getList");
+    public static class gleanBook<I extends Iface> extends org.apache.thrift.ProcessFunction<I, gleanBook_args> {
+      public gleanBook() {
+        super("gleanBook");
       }
 
-      public getList_args getEmptyArgsInstance() {
-        return new getList_args();
+      public gleanBook_args getEmptyArgsInstance() {
+        return new gleanBook_args();
       }
 
       protected boolean isOneway() {
@@ -150,9 +154,9 @@ public class ServerCommunication {
         return false;
       }
 
-      public getList_result getResult(I iface, getList_args args) throws org.apache.thrift.TException {
-        getList_result result = new getList_result();
-        result.success = iface.getList(args.location);
+      public gleanBook_result getResult(I iface, gleanBook_args args) throws org.apache.thrift.TException {
+        gleanBook_result result = new gleanBook_result();
+        result.success = iface.gleanBook(args.location, args.title);
         return result;
       }
     }
@@ -170,24 +174,24 @@ public class ServerCommunication {
     }
 
     private static <I extends AsyncIface> java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(java.util.Map<java.lang.String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
-      processMap.put("getList", new getList());
+      processMap.put("gleanBook", new gleanBook());
       return processMap;
     }
 
-    public static class getList<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getList_args, java.util.List<Book>> {
-      public getList() {
-        super("getList");
+    public static class gleanBook<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, gleanBook_args, Book> {
+      public gleanBook() {
+        super("gleanBook");
       }
 
-      public getList_args getEmptyArgsInstance() {
-        return new getList_args();
+      public gleanBook_args getEmptyArgsInstance() {
+        return new gleanBook_args();
       }
 
-      public org.apache.thrift.async.AsyncMethodCallback<java.util.List<Book>> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
+      public org.apache.thrift.async.AsyncMethodCallback<Book> getResultHandler(final org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new org.apache.thrift.async.AsyncMethodCallback<java.util.List<Book>>() { 
-          public void onComplete(java.util.List<Book> o) {
-            getList_result result = new getList_result();
+        return new org.apache.thrift.async.AsyncMethodCallback<Book>() { 
+          public void onComplete(Book o) {
+            gleanBook_result result = new gleanBook_result();
             result.success = o;
             try {
               fcall.sendResponse(fb, result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
@@ -202,7 +206,7 @@ public class ServerCommunication {
           public void onError(java.lang.Exception e) {
             byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
             org.apache.thrift.TSerializable msg;
-            getList_result result = new getList_result();
+            gleanBook_result result = new gleanBook_result();
             if (e instanceof org.apache.thrift.transport.TTransportException) {
               _LOGGER.error("TTransportException inside handler", e);
               fb.close();
@@ -230,26 +234,29 @@ public class ServerCommunication {
         return false;
       }
 
-      public void start(I iface, getList_args args, org.apache.thrift.async.AsyncMethodCallback<java.util.List<Book>> resultHandler) throws org.apache.thrift.TException {
-        iface.getList(args.location,resultHandler);
+      public void start(I iface, gleanBook_args args, org.apache.thrift.async.AsyncMethodCallback<Book> resultHandler) throws org.apache.thrift.TException {
+        iface.gleanBook(args.location, args.title,resultHandler);
       }
     }
 
   }
 
-  public static class getList_args implements org.apache.thrift.TBase<getList_args, getList_args._Fields>, java.io.Serializable, Cloneable, Comparable<getList_args>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getList_args");
+  public static class gleanBook_args implements org.apache.thrift.TBase<gleanBook_args, gleanBook_args._Fields>, java.io.Serializable, Cloneable, Comparable<gleanBook_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("gleanBook_args");
 
     private static final org.apache.thrift.protocol.TField LOCATION_FIELD_DESC = new org.apache.thrift.protocol.TField("location", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField TITLE_FIELD_DESC = new org.apache.thrift.protocol.TField("title", org.apache.thrift.protocol.TType.STRING, (short)2);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new getList_argsStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new getList_argsTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new gleanBook_argsStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new gleanBook_argsTupleSchemeFactory();
 
     private @org.apache.thrift.annotation.Nullable java.lang.String location; // required
+    private @org.apache.thrift.annotation.Nullable java.lang.String title; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      LOCATION((short)1, "location");
+      LOCATION((short)1, "location"),
+      TITLE((short)2, "title");
 
       private static final java.util.Map<java.lang.String, _Fields> byName = new java.util.HashMap<java.lang.String, _Fields>();
 
@@ -267,6 +274,8 @@ public class ServerCommunication {
         switch(fieldId) {
           case 1: // LOCATION
             return LOCATION;
+          case 2: // TITLE
+            return TITLE;
           default:
             return null;
         }
@@ -313,36 +322,44 @@ public class ServerCommunication {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.LOCATION, new org.apache.thrift.meta_data.FieldMetaData("location", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TITLE, new org.apache.thrift.meta_data.FieldMetaData("title", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getList_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(gleanBook_args.class, metaDataMap);
     }
 
-    public getList_args() {
+    public gleanBook_args() {
     }
 
-    public getList_args(
-      java.lang.String location)
+    public gleanBook_args(
+      java.lang.String location,
+      java.lang.String title)
     {
       this();
       this.location = location;
+      this.title = title;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getList_args(getList_args other) {
+    public gleanBook_args(gleanBook_args other) {
       if (other.isSetLocation()) {
         this.location = other.location;
       }
+      if (other.isSetTitle()) {
+        this.title = other.title;
+      }
     }
 
-    public getList_args deepCopy() {
-      return new getList_args(this);
+    public gleanBook_args deepCopy() {
+      return new gleanBook_args(this);
     }
 
     @Override
     public void clear() {
       this.location = null;
+      this.title = null;
     }
 
     @org.apache.thrift.annotation.Nullable
@@ -369,6 +386,30 @@ public class ServerCommunication {
       }
     }
 
+    @org.apache.thrift.annotation.Nullable
+    public java.lang.String getTitle() {
+      return this.title;
+    }
+
+    public void setTitle(@org.apache.thrift.annotation.Nullable java.lang.String title) {
+      this.title = title;
+    }
+
+    public void unsetTitle() {
+      this.title = null;
+    }
+
+    /** Returns true if field title is set (has been assigned a value) and false otherwise */
+    public boolean isSetTitle() {
+      return this.title != null;
+    }
+
+    public void setTitleIsSet(boolean value) {
+      if (!value) {
+        this.title = null;
+      }
+    }
+
     public void setFieldValue(_Fields field, @org.apache.thrift.annotation.Nullable java.lang.Object value) {
       switch (field) {
       case LOCATION:
@@ -376,6 +417,14 @@ public class ServerCommunication {
           unsetLocation();
         } else {
           setLocation((java.lang.String)value);
+        }
+        break;
+
+      case TITLE:
+        if (value == null) {
+          unsetTitle();
+        } else {
+          setTitle((java.lang.String)value);
         }
         break;
 
@@ -387,6 +436,9 @@ public class ServerCommunication {
       switch (field) {
       case LOCATION:
         return getLocation();
+
+      case TITLE:
+        return getTitle();
 
       }
       throw new java.lang.IllegalStateException();
@@ -401,6 +453,8 @@ public class ServerCommunication {
       switch (field) {
       case LOCATION:
         return isSetLocation();
+      case TITLE:
+        return isSetTitle();
       }
       throw new java.lang.IllegalStateException();
     }
@@ -409,12 +463,12 @@ public class ServerCommunication {
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof getList_args)
-        return this.equals((getList_args)that);
+      if (that instanceof gleanBook_args)
+        return this.equals((gleanBook_args)that);
       return false;
     }
 
-    public boolean equals(getList_args that) {
+    public boolean equals(gleanBook_args that) {
       if (that == null)
         return false;
       if (this == that)
@@ -429,6 +483,15 @@ public class ServerCommunication {
           return false;
       }
 
+      boolean this_present_title = true && this.isSetTitle();
+      boolean that_present_title = true && that.isSetTitle();
+      if (this_present_title || that_present_title) {
+        if (!(this_present_title && that_present_title))
+          return false;
+        if (!this.title.equals(that.title))
+          return false;
+      }
+
       return true;
     }
 
@@ -440,11 +503,15 @@ public class ServerCommunication {
       if (isSetLocation())
         hashCode = hashCode * 8191 + location.hashCode();
 
+      hashCode = hashCode * 8191 + ((isSetTitle()) ? 131071 : 524287);
+      if (isSetTitle())
+        hashCode = hashCode * 8191 + title.hashCode();
+
       return hashCode;
     }
 
     @Override
-    public int compareTo(getList_args other) {
+    public int compareTo(gleanBook_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -457,6 +524,16 @@ public class ServerCommunication {
       }
       if (isSetLocation()) {
         lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.location, other.location);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = java.lang.Boolean.valueOf(isSetTitle()).compareTo(other.isSetTitle());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTitle()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.title, other.title);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -479,7 +556,7 @@ public class ServerCommunication {
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("getList_args(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("gleanBook_args(");
       boolean first = true;
 
       sb.append("location:");
@@ -487,6 +564,14 @@ public class ServerCommunication {
         sb.append("null");
       } else {
         sb.append(this.location);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("title:");
+      if (this.title == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.title);
       }
       first = false;
       sb.append(")");
@@ -514,15 +599,15 @@ public class ServerCommunication {
       }
     }
 
-    private static class getList_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public getList_argsStandardScheme getScheme() {
-        return new getList_argsStandardScheme();
+    private static class gleanBook_argsStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public gleanBook_argsStandardScheme getScheme() {
+        return new gleanBook_argsStandardScheme();
       }
     }
 
-    private static class getList_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<getList_args> {
+    private static class gleanBook_argsStandardScheme extends org.apache.thrift.scheme.StandardScheme<gleanBook_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getList_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, gleanBook_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -540,6 +625,14 @@ public class ServerCommunication {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
+            case 2: // TITLE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.title = iprot.readString();
+                struct.setTitleIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
             default:
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
           }
@@ -549,7 +642,7 @@ public class ServerCommunication {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getList_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, gleanBook_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -558,40 +651,55 @@ public class ServerCommunication {
           oprot.writeString(struct.location);
           oprot.writeFieldEnd();
         }
+        if (struct.title != null) {
+          oprot.writeFieldBegin(TITLE_FIELD_DESC);
+          oprot.writeString(struct.title);
+          oprot.writeFieldEnd();
+        }
         oprot.writeFieldStop();
         oprot.writeStructEnd();
       }
 
     }
 
-    private static class getList_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public getList_argsTupleScheme getScheme() {
-        return new getList_argsTupleScheme();
+    private static class gleanBook_argsTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public gleanBook_argsTupleScheme getScheme() {
+        return new gleanBook_argsTupleScheme();
       }
     }
 
-    private static class getList_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<getList_args> {
+    private static class gleanBook_argsTupleScheme extends org.apache.thrift.scheme.TupleScheme<gleanBook_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getList_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, gleanBook_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
         if (struct.isSetLocation()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetTitle()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
         if (struct.isSetLocation()) {
           oprot.writeString(struct.location);
+        }
+        if (struct.isSetTitle()) {
+          oprot.writeString(struct.title);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getList_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, gleanBook_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
-        java.util.BitSet incoming = iprot.readBitSet(1);
+        java.util.BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
           struct.location = iprot.readString();
           struct.setLocationIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.title = iprot.readString();
+          struct.setTitleIsSet(true);
         }
       }
     }
@@ -601,15 +709,15 @@ public class ServerCommunication {
     }
   }
 
-  public static class getList_result implements org.apache.thrift.TBase<getList_result, getList_result._Fields>, java.io.Serializable, Cloneable, Comparable<getList_result>   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getList_result");
+  public static class gleanBook_result implements org.apache.thrift.TBase<gleanBook_result, gleanBook_result._Fields>, java.io.Serializable, Cloneable, Comparable<gleanBook_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("gleanBook_result");
 
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
 
-    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new getList_resultStandardSchemeFactory();
-    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new getList_resultTupleSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory STANDARD_SCHEME_FACTORY = new gleanBook_resultStandardSchemeFactory();
+    private static final org.apache.thrift.scheme.SchemeFactory TUPLE_SCHEME_FACTORY = new gleanBook_resultTupleSchemeFactory();
 
-    private @org.apache.thrift.annotation.Nullable java.util.List<Book> success; // required
+    private @org.apache.thrift.annotation.Nullable Book success; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -676,17 +784,16 @@ public class ServerCommunication {
     static {
       java.util.Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new java.util.EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Book.class))));
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Book.class)));
       metaDataMap = java.util.Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getList_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(gleanBook_result.class, metaDataMap);
     }
 
-    public getList_result() {
+    public gleanBook_result() {
     }
 
-    public getList_result(
-      java.util.List<Book> success)
+    public gleanBook_result(
+      Book success)
     {
       this();
       this.success = success;
@@ -695,18 +802,14 @@ public class ServerCommunication {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public getList_result(getList_result other) {
+    public gleanBook_result(gleanBook_result other) {
       if (other.isSetSuccess()) {
-        java.util.List<Book> __this__success = new java.util.ArrayList<Book>(other.success.size());
-        for (Book other_element : other.success) {
-          __this__success.add(new Book(other_element));
-        }
-        this.success = __this__success;
+        this.success = new Book(other.success);
       }
     }
 
-    public getList_result deepCopy() {
-      return new getList_result(this);
+    public gleanBook_result deepCopy() {
+      return new gleanBook_result(this);
     }
 
     @Override
@@ -714,28 +817,12 @@ public class ServerCommunication {
       this.success = null;
     }
 
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
     @org.apache.thrift.annotation.Nullable
-    public java.util.Iterator<Book> getSuccessIterator() {
-      return (this.success == null) ? null : this.success.iterator();
-    }
-
-    public void addToSuccess(Book elem) {
-      if (this.success == null) {
-        this.success = new java.util.ArrayList<Book>();
-      }
-      this.success.add(elem);
-    }
-
-    @org.apache.thrift.annotation.Nullable
-    public java.util.List<Book> getSuccess() {
+    public Book getSuccess() {
       return this.success;
     }
 
-    public void setSuccess(@org.apache.thrift.annotation.Nullable java.util.List<Book> success) {
+    public void setSuccess(@org.apache.thrift.annotation.Nullable Book success) {
       this.success = success;
     }
 
@@ -760,7 +847,7 @@ public class ServerCommunication {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((java.util.List<Book>)value);
+          setSuccess((Book)value);
         }
         break;
 
@@ -794,12 +881,12 @@ public class ServerCommunication {
     public boolean equals(java.lang.Object that) {
       if (that == null)
         return false;
-      if (that instanceof getList_result)
-        return this.equals((getList_result)that);
+      if (that instanceof gleanBook_result)
+        return this.equals((gleanBook_result)that);
       return false;
     }
 
-    public boolean equals(getList_result that) {
+    public boolean equals(gleanBook_result that) {
       if (that == null)
         return false;
       if (this == that)
@@ -829,7 +916,7 @@ public class ServerCommunication {
     }
 
     @Override
-    public int compareTo(getList_result other) {
+    public int compareTo(gleanBook_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
@@ -864,7 +951,7 @@ public class ServerCommunication {
 
     @Override
     public java.lang.String toString() {
-      java.lang.StringBuilder sb = new java.lang.StringBuilder("getList_result(");
+      java.lang.StringBuilder sb = new java.lang.StringBuilder("gleanBook_result(");
       boolean first = true;
 
       sb.append("success:");
@@ -881,6 +968,9 @@ public class ServerCommunication {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -899,15 +989,15 @@ public class ServerCommunication {
       }
     }
 
-    private static class getList_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public getList_resultStandardScheme getScheme() {
-        return new getList_resultStandardScheme();
+    private static class gleanBook_resultStandardSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public gleanBook_resultStandardScheme getScheme() {
+        return new gleanBook_resultStandardScheme();
       }
     }
 
-    private static class getList_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<getList_result> {
+    private static class gleanBook_resultStandardScheme extends org.apache.thrift.scheme.StandardScheme<gleanBook_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getList_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, gleanBook_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -918,19 +1008,9 @@ public class ServerCommunication {
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-                {
-                  org.apache.thrift.protocol.TList _list16 = iprot.readListBegin();
-                  struct.success = new java.util.ArrayList<Book>(_list16.size);
-                  @org.apache.thrift.annotation.Nullable Book _elem17;
-                  for (int _i18 = 0; _i18 < _list16.size; ++_i18)
-                  {
-                    _elem17 = new Book();
-                    _elem17.read(iprot);
-                    struct.success.add(_elem17);
-                  }
-                  iprot.readListEnd();
-                }
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new Book();
+                struct.success.read(iprot);
                 struct.setSuccessIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -945,20 +1025,13 @@ public class ServerCommunication {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getList_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, gleanBook_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (Book _iter19 : struct.success)
-            {
-              _iter19.write(oprot);
-            }
-            oprot.writeListEnd();
-          }
+          struct.success.write(oprot);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -967,16 +1040,16 @@ public class ServerCommunication {
 
     }
 
-    private static class getList_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
-      public getList_resultTupleScheme getScheme() {
-        return new getList_resultTupleScheme();
+    private static class gleanBook_resultTupleSchemeFactory implements org.apache.thrift.scheme.SchemeFactory {
+      public gleanBook_resultTupleScheme getScheme() {
+        return new gleanBook_resultTupleScheme();
       }
     }
 
-    private static class getList_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<getList_result> {
+    private static class gleanBook_resultTupleScheme extends org.apache.thrift.scheme.TupleScheme<gleanBook_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getList_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, gleanBook_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol oprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet optionals = new java.util.BitSet();
         if (struct.isSetSuccess()) {
@@ -984,32 +1057,17 @@ public class ServerCommunication {
         }
         oprot.writeBitSet(optionals, 1);
         if (struct.isSetSuccess()) {
-          {
-            oprot.writeI32(struct.success.size());
-            for (Book _iter20 : struct.success)
-            {
-              _iter20.write(oprot);
-            }
-          }
+          struct.success.write(oprot);
         }
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getList_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, gleanBook_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TTupleProtocol iprot = (org.apache.thrift.protocol.TTupleProtocol) prot;
         java.util.BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
-          {
-            org.apache.thrift.protocol.TList _list21 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new java.util.ArrayList<Book>(_list21.size);
-            @org.apache.thrift.annotation.Nullable Book _elem22;
-            for (int _i23 = 0; _i23 < _list21.size; ++_i23)
-            {
-              _elem22 = new Book();
-              _elem22.read(iprot);
-              struct.success.add(_elem22);
-            }
-          }
+          struct.success = new Book();
+          struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
       }
