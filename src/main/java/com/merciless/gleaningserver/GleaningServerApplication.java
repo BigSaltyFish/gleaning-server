@@ -46,38 +46,57 @@ public class GleaningServerApplication {
 				cProcessor = new ClientService.Processor(server);
 				sProcessor = new ServerCommunication.Processor(provider);
 
-				Runnable simple = new Runnable(){
+				Runnable runServer = new Runnable(){
 				
 					@Override
 					public void run() {
-						simple(cProcessor, sProcessor, config);
+						runServer(cProcessor, config);
 					}
 				};
 
-				new Thread(simple).start();
+				Runnable runProvider = new Runnable(){
+				
+					@Override
+					public void run() {
+						runProvider(sProcessor, config);
+					}
+				};
+
+				new Thread(runServer).start();
+				new Thread(runProvider).start();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		};
 	}
 
-	public static void simple(ClientService.Processor cProcessor, ServerCommunication.Processor sProcessor, Config config) {
+	public static void runServer(ClientService.Processor cProcessor, Config config) {
 		
 		try {
 			TServerTransport serverTransport = new TServerSocket(config.SERVER_PORT);
-			TServerTransport providerTransport = new TServerSocket(config.PROVIDER_PORT);
 			TServer server = new TSimpleServer(new Args(serverTransport).processor(cProcessor));
-			TServer provider = new TSimpleServer(new Args(providerTransport).processor(sProcessor));
 
-			server.serve();
 			log.info("the server has started...");
-
-			provider.serve();
-			log.info("the provider has started...");
+			server.serve();
 
 		} catch (Exception e) {
 
 			log.error("Server failed to start. ");
+			e.printStackTrace();
+		}
+	}
+
+	public static void runProvider(ServerCommunication.Processor sProcessor, Config config) {
+		try {
+			TServerTransport providerTransport = new TServerSocket(config.PROVIDER_PORT);
+			TServer provider = new TSimpleServer(new Args(providerTransport).processor(sProcessor));
+
+			log.info("the provider has started...");
+			provider.serve();
+
+		} catch (Exception e) {
+
+			log.error("Provider failed to start. ");
 			e.printStackTrace();
 		}
 	}

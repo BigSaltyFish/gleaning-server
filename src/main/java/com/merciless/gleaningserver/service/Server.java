@@ -34,12 +34,23 @@ public class Server implements ClientService.Iface {
     @Override
     public boolean addBook(String title, String content) throws TException {
 
-        bookMapper.addBook(title, content);
+        log.info(String.format("New book %s arrived", title));
+
+        try {
+            bookMapper.addBook(title, content);
+        } catch (DataAccessException e) {
+            log.error(String.format("Book %s failed to insert", title));
+            e.printStackTrace();
+
+            return false;
+        }
         
         return true;
     }
 
     public ArrayList<Book> getAllBooks() throws TException {
+
+        log.info("listing all of the books...");
         return bookMapper.getAllBooks();
     }
 
@@ -60,6 +71,7 @@ public class Server implements ClientService.Iface {
 
     public ArrayList<Host> getAllhosts() {
 
+        log.info("Listing all of the hosts...");
         return hostMapper.getAllHosts();
     }
 
