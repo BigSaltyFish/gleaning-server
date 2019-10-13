@@ -14,3 +14,10 @@ CREATE TABLE hosts (
     hostName VARCHAR(30),
     location VARCHAR(100) PRIMARY KEY
 );
+
+INSERT INTO books VALUES 
+('To Kill A Mocking Bird', 'Awesom Book'),
+('Pride And Prejudice', 'Great');
+
+INSERT INTO hosts VALUES
+('orca', 'localhost');
