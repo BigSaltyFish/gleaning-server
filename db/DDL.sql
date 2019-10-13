@@ -20,4 +20,4 @@ INSERT INTO books VALUES
 ('Pride And Prejudice', 'Great');
 
 INSERT INTO hosts VALUES
-('orca', 'localhost');
+('orca', '47.103.95.85');
