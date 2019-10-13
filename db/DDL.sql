@@ -16,7 +16,7 @@ CREATE TABLE hosts (
 );
 
 INSERT INTO books VALUES 
-('To Kill A Mocking Bird', 'Awesom Book'),
+('Hamlet', 'Awesom Book'),
 ('Pride And Prejudice', 'Great');
 
 INSERT INTO hosts VALUES
