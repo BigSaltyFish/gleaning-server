@@ -38,6 +38,8 @@ public class Gleaner {
 
         for(Host host : hosts) {
 
+            if(host.getHostName().equals(this.config.SELF)) continue;
+
             log.info(String.format("Started to ask server %s", host.getHostName()));
 
             try {

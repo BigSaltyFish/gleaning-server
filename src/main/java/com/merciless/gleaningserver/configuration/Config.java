@@ -10,4 +10,6 @@ public class Config {
     public static final int GLEANER_PORT = 8010;
 
     public static final int PROVIDER_PORT = 8020;
+
+    public static final String SELF = "orca";
 }
