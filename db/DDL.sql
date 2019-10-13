@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS hosts;
 
 CREATE TABLE books (
     title VARCHAR(200) PRIMARY KEY,
-    content VARCHAR(100000)
+    content VARCHAR(10000)
 );
 
 CREATE TABLE hosts (

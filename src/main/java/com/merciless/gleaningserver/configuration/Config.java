@@ -11,5 +11,5 @@ public class Config {
 
     public static final int PROVIDER_PORT = 8020;
 
-    public static final String SELF = "beluga";
+    public static final String SELF = "orca";
 }
